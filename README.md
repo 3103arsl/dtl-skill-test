@@ -12,7 +12,7 @@
 - We are NOT expecting to test a code.
 - We are NOT expecting for HTML/Blade Template code. This scenario must work on an API and works with JSON format.
 
-#### Note: I have implement Observer to save user information and send email notification to creator.
+#### Note: I have implemented Observer to save user information and send email notification to creator.
  
  ### Installation
  
