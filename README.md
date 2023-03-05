@@ -21,4 +21,20 @@ Install dependencies using following command
  ```bash
 composer install
 ```
+Copy .env file
+
+ ```bash
+copy .env.example .env
+```
+Create database
+
+ ```bash
+php artisan migrate:refresh --seed
+```
+
+Run application
+
+ ```bash
+php artisan serve
+```
 
