@@ -2,7 +2,7 @@
 
 ### Requirement
 
-- We expect that product module will contain product's name, price, status, person's information who add the product and product's type (item/service).
+- We expect that product module will contain product's name, price, status, person's information who add the product and product's type (item/service). 
 - We expect to see all product's previous record history. (This may be just in Model & Migration.)
 - We expect to see Product's add, edit, delete, show, and index methods.
 - We expect a capability to see the person who added the product and capability to see a product list that can be filtered as product name and person who added the product.
@@ -11,6 +11,8 @@
 - We will NOT be expecting to see login, logout, user crud modules. Please keep your focus on the product module. (You are free to create a middleware that can create a random user when request triggered.)
 - We are NOT expecting to test a code.
 - We are NOT expecting for HTML/Blade Template code. This scenario must work on an API and works with JSON format.
+
+#### Note: I have implement Observer to save user information and send email notification to creator.
  
  ### Installation
  
@@ -37,4 +39,43 @@ Run application
  ```bash
 php artisan serve
 ```
+
+### Endpoints
+
+ ```bash
+GET: http://127.0.0.1:8000/api/v1/products
+```
+
+ ```bash
+GET: http://127.0.0.1:8000/api/v1/products?search="Product"
+```
+
+ ```bash
+POST: http://127.0.0.1:8000/api/v1/products
+
+**Params**
+name:Product
+type:1
+status:0
+price:20
+```
+
+ ```bash
+GET: http://127.0.0.1:8000/api/v1/products/{id}
+```
+
+ ```bash
+PUT: http://127.0.0.1:8000/api/v1/products/{id}
+
+**Params**
+name:Product
+type:1
+status:0
+price:20
+```
+
+ ```bash
+DLETE: http://127.0.0.1:8000/api/v1/products/{id}
+```
+
 
