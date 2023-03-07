@@ -29,7 +29,7 @@ class Product extends Model
 
     public function logs()
     {
-        return $this->hasMany(Activity::class, 'subject_id');
+        return $this->hasMany(ProductHistory::class);
     }
 
     /**

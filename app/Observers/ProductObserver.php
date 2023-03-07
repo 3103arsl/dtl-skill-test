@@ -5,10 +5,23 @@ namespace App\Observers;
 use App\Helpers\UserTrait;
 use App\Models\Product;
 use App\Notifications\NewProductNotification;
+use App\Services\ProductLoggerService;
 
 class ProductObserver
 {
     use UserTrait;
+
+    private $loggerService;
+    private $currentUserID;
+
+    /**
+     * @param ProductLoggerService $loggerService
+     */
+    public function __construct(ProductLoggerService $loggerService)
+    {
+        $this->currentUserID = $this->getCurrentUserID(true);
+        $this->loggerService = $loggerService;
+    }
 
     /**
      * @param Product $product
@@ -16,7 +29,7 @@ class ProductObserver
      */
     public function creating(Product $product)
     {
-        $product->creator_id = $this->getCurrentUserID();
+        $product->creator_id = $this->currentUserID;
     }
 
     /**
@@ -25,6 +38,10 @@ class ProductObserver
      */
     public function created(Product $product): void
     {
+        $this->loggerService->setNewProduct($product);
+        $this->loggerService->setCreator($this->currentUserID);
+        $this->loggerService->log();
+
         if ($product && $creator = $product->creator) {
             $creator->notify(new NewProductNotification($product));
         }
@@ -37,7 +54,8 @@ class ProductObserver
      */
     public function updating(Product $product)
     {
-        $product->updator_id = $this->getCurrentUserID();
+        $this->loggerService->setOldProduct($product);
+        $product->updator_id = $this->currentUserID;
     }
 
     /**
@@ -46,7 +64,9 @@ class ProductObserver
      */
     public function updated(Product $product): void
     {
-        //
+        $this->loggerService->setNewProduct($product);
+        $this->loggerService->setCreator($this->currentUserID);
+        $this->loggerService->log();
     }
 
     /**
